@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verbi Irregolari</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f6fb; --panel:#fff; --ink:#1f2a44; --muted:#6b7590; --line:#e2e6f0;
+  --blue:#2f5bea; --blue-soft:#e8eeff; --green:#1e9e5a; --green-soft:#e3f6ec;
+  --red:#d6453d; --red-soft:#fdeceb; --amber:#c98a00; --amber-soft:#fff5d9;
+  --purple:#7b3fe4; --purple-soft:#f1e8ff;
+  --radius:16px; --shadow:0 2px 10px rgba(31,42,68,.07);
+  --ph:170px; --half:85px;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:Nunito,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink);font-size:17px;line-height:1.4}
+button,input,select{font:inherit;color:inherit}
+header{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:5}
+.top{max-width:960px;margin:0 auto;padding:12px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+.logo{font-weight:800;font-size:20px;display:flex;align-items:center;gap:8px;margin-right:auto}
+.logo span{background:var(--purple);color:#fff;border-radius:10px;padding:2px 8px;font-size:15px}
+.student{display:flex;align-items:center;gap:6px;color:var(--muted);font-size:15px}
+.student select{padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink);font-weight:700}
+nav{max-width:960px;margin:0 auto;padding:0 16px;display:flex;gap:4px;overflow-x:auto}
+nav button{border:0;background:none;padding:10px 14px;font-weight:700;color:var(--muted);border-bottom:3px solid transparent;cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--blue);border-bottom-color:var(--blue)}
+main{max-width:960px;margin:0 auto;padding:20px 16px 60px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+h2{margin:0 0 12px;font-size:21px}
+h3{margin:18px 0 8px;font-size:16px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:#c5cce0}
+.btn.primary{background:var(--blue);border-color:var(--blue);color:#fff}
+.btn.primary:hover{filter:brightness(1.08)}
+.btn.amber{background:var(--amber-soft);border-color:#f0d78a;color:#7a5400}
+.btn.danger{color:var(--red)}
+.btn.small{padding:5px 10px;font-size:14px;border-radius:10px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:760px){.grid4{grid-template-columns:1fr 1fr}}
+@media(max-width:640px){.grid2{grid-template-columns:1fr}}
+label.f{display:block;font-weight:700;font-size:14px;color:var(--muted);margin-bottom:4px}
+input[type=text],input[type=search]{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:#fff}
+input[type=text]:focus,input[type=search]:focus{outline:2px solid var(--blue-soft);border-color:var(--blue)}
+.hint{font-size:13px;color:var(--muted);margin-top:4px}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:14px;font-weight:700;cursor:pointer}
+.chip.on{background:var(--blue-soft);border-color:var(--blue);color:var(--blue)}
+.list{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px}
+.item{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 10px 10px 14px;display:flex;gap:10px;align-items:center}
+.item .w{flex:1;min-width:0}
+.item .en{font-weight:800;overflow-wrap:anywhere}
+.item .en i{font-style:normal;color:#b3bbd0;padding:0 3px}
+.item .it{color:var(--muted);overflow-wrap:anywhere}
+.item .cat{font-size:12px;color:var(--blue);font-weight:700}
+.item .acts{display:flex;flex-direction:column;gap:4px}
+.icon{border:0;background:none;cursor:pointer;font-size:17px;padding:4px;border-radius:8px}
+.icon:hover{background:#f1f3f9}
+.empty{text-align:center;color:var(--muted);padding:30px 10px}
+.opt{display:flex;gap:8px;flex-wrap:wrap}
+.opt label{border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer;font-weight:700;display:flex;gap:6px;align-items:center;background:#fff}
+.opt input{accent-color:var(--blue)}
+.opt label:has(input:checked){border-color:var(--blue);background:var(--blue-soft);color:var(--blue)}
+/* quiz */
+.stats{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:6px 12px;font-weight:700;font-size:14px}
+.bar{height:8px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:18px}
+.bar div{height:100%;background:var(--green);transition:width .3s}
+/* prisma */
+.stage{perspective:1000px;max-width:460px;height:var(--ph);margin:26px auto 30px}
+.prism{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.34,1.3,.5,1)}
+.face{position:absolute;inset:0;border-radius:20px;border:2px solid var(--tone);background:linear-gradient(180deg,#fff 0%,var(--soft) 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:10px 14px;text-align:center}
+.face .lbl{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--tone)}
+.face .val{font-size:38px;font-weight:800;margin-top:4px;overflow-wrap:anywhere;line-height:1.15}
+.face .val.q{color:#c3c9d9}
+.f-base{--tone:var(--blue);--soft:var(--blue-soft)}
+.f-past{--tone:var(--green);--soft:var(--green-soft)}
+.f-pp{--tone:var(--purple);--soft:var(--purple-soft)}
+.f-it{--tone:var(--amber);--soft:var(--amber-soft)}
+.stage.win .face{box-shadow:0 0 0 6px rgba(30,158,90,.18)}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;max-width:560px;margin:0 auto}
+@media(max-width:520px){.slots{grid-template-columns:1fr 1fr}}
+.slot{border:1px solid var(--line);background:#fff;border-radius:12px;padding:6px 8px;text-align:center;transition:all .2s}
+.slot .l{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.05em;color:var(--tone)}
+.slot .v{font-weight:800;min-height:1.4em;overflow-wrap:anywhere;color:#c3c9d9}
+.slot.ok .v{color:var(--ink)}
+.slot.now{border-color:var(--tone);box-shadow:0 0 0 3px var(--soft)}
+.ask{text-align:center;font-weight:800;font-size:20px;margin:16px 0 0}
+.ans{max-width:560px;margin:10px auto 0}
+.ans input{font-size:20px;text-align:center;padding:12px}
+.ans .row{justify-content:center;margin-top:10px}
+.fb{max-width:560px;margin:14px auto 0;border-radius:14px;padding:12px 14px;font-weight:700;text-align:center;display:none}
+.fb.ok{display:block;background:var(--green-soft);color:#126b3c}
+.fb.no{display:block;background:var(--red-soft);color:#9b2b25}
+.fb.rev{display:block;background:var(--amber-soft);color:#7a5400}
+.fb.info{display:block;background:var(--blue-soft);color:var(--blue)}
+.fb .big{font-size:22px;display:block;margin-top:4px}
+.mic.listening{background:var(--red);border-color:var(--red);color:#fff;animation:pulse 1s infinite}
+@keyframes pulse{50%{box-shadow:0 0 0 6px rgba(214,69,61,.2)}}
+.modal{position:fixed;inset:0;background:rgba(20,28,48,.45);display:none;align-items:center;justify-content:center;z-index:20;padding:16px}
+.modal.on{display:flex}
+.modal .panel{max-width:420px;width:100%}
+.toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 16px;border-radius:12px;font-weight:700;opacity:0;transition:opacity .25s;pointer-events:none;z-index:30;max-width:90%;text-align:center}
+.toast.on{opacity:1}
+.hidden{display:none!important}
+.small{font-size:14px;color:var(--muted)}
+.hardlist{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:10px 0}
+.hardlist span{background:var(--amber-soft);border-radius:10px;padding:4px 10px;font-weight:700;font-size:15px}
+@media (prefers-reduced-motion: reduce){.prism{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="top">
+    <div class="logo"><span>EN</span> Verbi Irregolari</div>
+    <div class="student">Studente:
+      <select id="studentSel" aria-label="Scegli lo studente"></select>
+    </div>
+  </div>
+  <nav>
+    <button data-tab="cards" class="on">📚 I miei verbi</button>
+    <button data-tab="quiz">🎯 Interrogati</button>
+    <button data-tab="backup">💾 Salva e carica</button>
+  </nav>
+</header>
+
+<main>
+  <!-- ===================== I MIEI VERBI ===================== -->
+  <section id="tab-cards">
+    <div class="panel" id="formPanel">
+      <h2 id="formTitle">➕ Nuovo verbo</h2>
+      <div class="grid4">
+        <div>
+          <label class="f" for="fBase">🔵 Base form</label>
+          <input type="text" id="fBase" autocomplete="off" placeholder="es. eat">
+        </div>
+        <div>
+          <label class="f" for="fPast">🟢 Past simple</label>
+          <input type="text" id="fPast" autocomplete="off" placeholder="es. ate">
+        </div>
+        <div>
+          <label class="f" for="fPp">🟣 Past participle</label>
+          <input type="text" id="fPp" autocomplete="off" placeholder="es. eaten">
+        </div>
+        <div>
+          <label class="f" for="fIt">🇮🇹 Italiano</label>
+          <input type="text" id="fIt" autocomplete="off" placeholder="es. mangiare">
+        </div>
+      </div>
+      <div class="hint">Base form e italiano sono obbligatori. Se ci sono più forme giuste, separale con la barra: <b>was / were</b>, <b>learnt / learned</b>, <b>prendere / ottenere</b>.</div>
+      <div class="grid2" style="margin-top:12px">
+        <div>
+          <label class="f" for="fCat">🗂️ Mazzo</label>
+          <input type="text" id="fCat" list="catList" autocomplete="off" placeholder="es. i-a-u, Unit 5…">
+          <datalist id="catList"></datalist>
+          <div class="hint">Scegli un mazzo che hai già oppure scrivi il nome di uno nuovo.</div>
+        </div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <button class="btn primary" id="saveCard">Salva verbo</button>
+        <button class="btn hidden" id="cancelEdit">Annulla</button>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <h2 style="margin:0">I miei mazzi <span class="small" id="countLbl"></span></h2>
+        <div class="row">
+          <input type="search" id="search" placeholder="🔍 Cerca…" style="width:170px">
+          <select id="sortSel" class="btn small" aria-label="Ordina">
+            <option value="cat">Ordina per mazzo</option>
+            <option value="en">Ordina A-Z (inglese)</option>
+            <option value="it">Ordina A-Z (italiano)</option>
+            <option value="new">Più recenti</option>
+          </select>
+        </div>
+      </div>
+      <div class="chips" id="catFilter"></div>
+      <div id="listWrap" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <!-- ===================== INTERROGATI ===================== -->
+  <section id="tab-quiz" class="hidden">
+    <div class="panel" id="setup">
+      <h2>🎯 Preparati all'interrogazione</h2>
+      <h3>Livello di difficoltà</h3>
+      <div class="opt">
+        <label><input type="radio" name="level" value="3"> 🟢 Facile: ti do 3 forme, ne scrivi 1</label>
+        <label><input type="radio" name="level" value="2"> 🟡 Medio: ti do 2 forme, ne scrivi 2</label>
+        <label><input type="radio" name="level" value="1" checked> 🔴 Difficile: ti do 1 forma, ne scrivi 3</label>
+      </div>
+      <h3>Da quale faccia del prisma parto?</h3>
+      <div class="opt">
+        <label><input type="radio" name="start" value="rand" checked> 🔀 A caso</label>
+        <label><input type="radio" name="start" value="0"> 🔵 Base form</label>
+        <label><input type="radio" name="start" value="1"> 🟢 Past simple</label>
+        <label><input type="radio" name="start" value="2"> 🟣 Past participle</label>
+        <label><input type="radio" name="start" value="3"> 🇮🇹 Italiano</label>
+      </div>
+      <div class="hint">Il prisma ruota sempre nell'ordine Base form → Past simple → Past participle → Italiano (e poi ricomincia). «A caso» sceglie una faccia diversa per ogni verbo.</div>
+      <h3>Mazzi da ripassare</h3>
+      <div class="row" style="margin-bottom:8px">
+        <button class="btn small" id="selAll">Tutti</button>
+        <button class="btn small" id="selNone">Nessuno</button>
+      </div>
+      <div class="chips" id="quizCats"></div>
+      <h3>Ordine</h3>
+      <div class="opt">
+        <label><input type="checkbox" id="shuffle" checked> 🔀 Mescola i verbi</label>
+      </div>
+      <div class="row" style="margin-top:18px">
+        <button class="btn primary" id="startQuiz">▶ Inizia (<span id="selCount">0</span> verbi)</button>
+      </div>
+    </div>
+
+    <div id="play" class="hidden">
+      <div class="row" style="justify-content:space-between;margin-bottom:10px">
+        <div class="stats">
+          <div class="stat">📦 Da fare: <span id="sLeft">0</span></div>
+          <div class="stat" style="color:var(--green)">⭐ Punti: <span id="sOk">0</span></div>
+          <div class="stat" style="color:var(--amber)">📌 Messi da parte: <span id="sRev">0</span></div>
+          <div class="stat hidden" id="sRoundBox">🔁 Giro: <span id="sRound">1</span></div>
+        </div>
+        <button class="btn small" id="stopQuiz">✋ Basta così</button>
+      </div>
+      <div class="bar"><div id="prog" style="width:0"></div></div>
+
+      <div class="stage" id="stage"><div class="prism" id="prism"></div></div>
+      <div class="slots" id="slots"></div>
+      <div class="row" style="justify-content:center;margin-top:10px">
+        <button class="btn small" id="qListen">🔊 Ascolta</button>
+        <span class="small" id="qCat"></span>
+      </div>
+
+      <div class="ask" id="qAsk"></div>
+      <div class="ans" id="ansBox">
+        <input type="text" id="answer" autocomplete="off" autocapitalize="off" spellcheck="false">
+        <div class="row">
+          <button class="btn primary" id="check">✔ Controlla</button>
+          <button class="btn mic" id="mic">🎤 Pronuncia</button>
+          <button class="btn amber" id="reveal">👀 Non lo so, mostra</button>
+        </div>
+        <div class="hint" style="text-align:center" id="micHint"></div>
+      </div>
+
+      <div class="fb" id="fb"></div>
+      <div class="row hidden" id="nextRow" style="justify-content:center;margin-top:12px">
+        <button class="btn primary" id="next">Avanti ➜</button>
+      </div>
+    </div>
+
+    <div class="panel hidden" id="done" style="text-align:center">
+      <div style="font-size:52px" id="doneIcon">🏆</div>
+      <h2 id="doneTitle">Interrogazione completata!</h2>
+      <p id="doneTxt"></p>
+      <div id="doneHard"></div>
+      <div class="row" style="justify-content:center;margin-top:14px">
+        <button class="btn amber" id="retryHard">🔁 Ripassa solo quelli che ho sbagliato</button>
+        <button class="btn primary" id="again">Nuova interrogazione</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BACKUP ===================== -->
+  <section id="tab-backup" class="hidden">
+    <div class="panel">
+      <h2>💾 Salva i tuoi verbi</h2>
+      <p class="small">I verbi restano salvati in questo browser, su questo computer. Per non perderli, o per portarli su un altro computer, scarica ogni tanto una copia (contiene tutti i tuoi mazzi).</p>
+      <button class="btn primary" id="exportBtn">⬇ Scarica i miei verbi</button>
+    </div>
+    <div class="panel">
+      <h2>📥 Carica dei verbi</h2>
+      <p class="small">Carica un file salvato in precedenza, oppure i mazzi preparati dal professore. I verbi vengono aggiunti a quelli che hai già (i doppioni vengono saltati).</p>
+      <label class="btn" style="cursor:pointer">📂 Scegli file…<input type="file" id="importFile" accept=".json,application/json" hidden></label>
+      <div style="margin-top:14px">
+        <button class="btn" id="sampleBtn">✨ Aggiungi i verbi irregolari della 3C</button>
+        <div class="hint">Ogni nuovo studente li trova già caricati. Questo pulsante serve se li hai cancellati: aggiunge solo quelli che mancano.</div>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>👤 Studenti su questo computer</h2>
+      <p class="small">Se più persone usano lo stesso computer, ognuno può avere i propri verbi e i propri mazzi.</p>
+      <div class="row">
+        <button class="btn" id="newStudentBtn">➕ Nuovo studente</button>
+        <button class="btn" id="renameStudentBtn">✏️ Rinomina</button>
+        <button class="btn danger" id="delStudentBtn">🗑 Elimina studente corrente</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- modale nome -->
+<div class="modal" id="nameModal">
+  <div class="panel">
+    <h2 id="nameTitle">👋 Ciao! Come ti chiami?</h2>
+    <p class="small" id="nameSub">Il tuo nome serve solo per tenere separati i tuoi verbi.</p>
+    <input type="text" id="nameInput" placeholder="Nome e cognome" autocomplete="off">
+    <div class="row" style="margin-top:12px;justify-content:flex-end">
+      <button class="btn hidden" id="nameCancel">Annulla</button>
+      <button class="btn primary" id="nameOk">OK</button>
+    </div>
+  </div>
+</div>
+<!-- modale conferma -->
+<div class="modal" id="confModal">
+  <div class="panel">
+    <h2 id="confTitle">Sei sicuro?</h2>
+    <p id="confTxt" class="small"></p>
+    <div class="row" style="justify-content:flex-end">
+      <button class="btn" id="confNo">Annulla</button>
+      <button class="btn primary" style="background:var(--red);border-color:var(--red)" id="confYes">Sì, elimina</button>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+(function(){
+"use strict";
+const $ = id => document.getElementById(id);
+const LS_KEY = 'verbi-irregolari-v1';
+const HELLO_SUB = 'Il tuo nome serve solo per tenere separati i tuoi verbi.';
+
+/* le 4 facce del prisma, nell'ordine in cui ruota */
+const F = [
+  {k:'base', l:'Base form',       q:'Qual è il Base form?',        lang:'en', ph:'Write the base form…'},
+  {k:'past', l:'Past simple',     q:'Qual è il Past simple?',      lang:'en', ph:'Write the past simple…'},
+  {k:'pp',   l:'Past participle', q:'Qual è il Past participle?',  lang:'en', ph:'Write the past participle…'},
+  {k:'it',   l:'Italiano',        q:'Come si dice in italiano?',   lang:'it', ph:'Scrivi in italiano…'}
+];
+
+/* ---------------- dati ---------------- */
+let DB = {current:null, students:{}};
+let storageOk = true;
+try{
+  const raw = localStorage.getItem(LS_KEY);
+  if(raw){ const d = JSON.parse(raw); if(d && d.students) DB = d; }
+}catch(e){ storageOk = false; }
+
+function save(){
+  try{ localStorage.setItem(LS_KEY, JSON.stringify(DB)); return true; }
+  catch(e){
+    toast(storageOk ? '⚠️ Memoria piena: elimina qualche verbo.' : '⚠️ Questo browser non permette di salvare: scarica i verbi prima di chiudere!');
+    return false;
+  }
+}
+const cards = () => (DB.current && DB.students[DB.current]) ? DB.students[DB.current].cards : [];
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,7);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const catOf = c => (c.cat || '').trim() || 'Senza mazzo';
+const val = (c, fi) => String(c[F[fi].k] || '').trim();
+const triple = c => [c.base, c.past, c.pp].map(x=>String(x||'').trim() || '—').join(' – ');
+function allCats(){
+  const s = new Set(cards().map(catOf));
+  return [...s].sort((a,b)=> a==='Senza mazzo' ? 1 : b==='Senza mazzo' ? -1 : a.localeCompare(b,'it',{numeric:true}));
+}
+
+let toastT;
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('on'),2800); }
+
+/* ---------------- modali ---------------- */
+let nameCb = null;
+function askName(title, sub, initial, cancellable, cb){
+  $('nameTitle').textContent = title; $('nameSub').textContent = sub;
+  $('nameInput').value = initial || '';
+  $('nameCancel').classList.toggle('hidden', !cancellable);
+  nameCb = cb; $('nameModal').classList.add('on');
+  setTimeout(()=>$('nameInput').focus(),50);
+}
+function nameSubmit(){
+  const v = $('nameInput').value.trim();
+  if(!v){ $('nameInput').focus(); return; }
+  if(nameCb && nameCb(v) === false) return;
+  $('nameModal').classList.remove('on');
+}
+$('nameOk').onclick = nameSubmit;
+$('nameInput').onkeydown = e => { if(e.key==='Enter') nameSubmit(); };
+$('nameCancel').onclick = () => $('nameModal').classList.remove('on');
+
+let confCb = null;
+function confirmBox(title, txt, cb){ $('confTitle').textContent=title; $('confTxt').textContent=txt; confCb=cb; $('confModal').classList.add('on'); }
+$('confNo').onclick = () => $('confModal').classList.remove('on');
+$('confYes').onclick = () => { $('confModal').classList.remove('on'); if(confCb) confCb(); };
+
+/* ---------------- studenti ---------------- */
+function addStudent(name){
+  if(DB.students[name]){ toast('Questo nome esiste già'); return false; }
+  DB.students[name] = {cards:[]}; DB.current = name;
+  addSamples(true);   // ogni nuovo studente trova già i verbi della 3C
+  save(); refreshAll(); return true;
+}
+function renderStudents(){
+  const sel = $('studentSel');
+  const names = Object.keys(DB.students).sort((a,b)=>a.localeCompare(b,'it'));
+  sel.innerHTML = names.map(n=>`<option ${n===DB.current?'selected':''}>${esc(n)}</option>`).join('') + '<option value="__new">➕ Nuovo studente…</option>';
+}
+$('studentSel').onchange = e => {
+  if(e.target.value === '__new'){ renderStudents(); newStudent(); return; }
+  DB.current = e.target.value; save(); resetQuiz(); refreshAll();
+};
+function newStudent(){ askName('➕ Nuovo studente','Ogni studente ha i propri verbi.','',true, addStudent); }
+$('newStudentBtn').onclick = newStudent;
+$('renameStudentBtn').onclick = () => {
+  if(!DB.current) return;
+  askName('✏️ Rinomina','Scrivi il nuovo nome.',DB.current,true, v=>{
+    if(v===DB.current) return true;
+    if(DB.students[v]){ toast('Questo nome esiste già'); return false; }
+    DB.students[v] = DB.students[DB.current]; delete DB.students[DB.current]; DB.current = v; save(); refreshAll(); return true;
+  });
+};
+$('delStudentBtn').onclick = () => {
+  if(!DB.current) return;
+  confirmBox('Eliminare '+DB.current+'?', 'Verranno cancellati tutti i suoi '+cards().length+' verbi da questo computer. Se vuoi conservarli, scaricali prima.', ()=>{
+    delete DB.students[DB.current];
+    DB.current = Object.keys(DB.students)[0] || null; save(); resetQuiz(); refreshAll();
+    if(!DB.current) askName('👋 Ciao! Come ti chiami?', HELLO_SUB, '', false, addStudent);
+  });
+};
+
+/* ---------------- tabs ---------------- */
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => showTab(b.dataset.tab));
+function showTab(t){
+  document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on', b.dataset.tab===t));
+  ['cards','quiz','backup'].forEach(x=>$('tab-'+x).classList.toggle('hidden', x!==t));
+  if(t==='quiz' && !Q) renderSetup();
+  if(t!=='quiz' && Q) stopMic();
+}
+
+/* ---------------- form verbo ---------------- */
+const FIELDS = ['fBase','fPast','fPp','fIt'];
+let editId = null;
+function clearForm(){
+  editId=null; FIELDS.forEach(id=>$(id).value='');
+  $('formTitle').textContent='➕ Nuovo verbo'; $('saveCard').textContent='Salva verbo'; $('cancelEdit').classList.add('hidden');
+}
+$('cancelEdit').onclick = clearForm;
+$('saveCard').onclick = () => {
+  const v = {base:$('fBase').value.trim(), past:$('fPast').value.trim(), pp:$('fPp').value.trim(), it:$('fIt').value.trim(), cat:$('fCat').value.trim()};
+  if(!v.base || !v.it){ toast('Scrivi almeno il Base form e la traduzione italiana'); (v.base?$('fIt'):$('fBase')).focus(); return; }
+  if(editId){
+    const c = cards().find(x=>x.id===editId);
+    if(c) Object.assign(c, v);
+    toast('Verbo modificato ✔');
+  } else {
+    if(cards().some(c=>c.base.toLowerCase()===v.base.toLowerCase() && c.it.toLowerCase()===v.it.toLowerCase())){ toast('Questo verbo c\'è già'); return; }
+    cards().push(Object.assign({id:uid(), created:Date.now()}, v));
+    toast('Verbo aggiunto ✔');
+  }
+  if(!save()){ if(!editId) cards().pop(); return; }
+  clearForm(); renderList(); $('fBase').focus();   // il mazzo resta, comodo per inserire più verbi dello stesso gruppo
+};
+// Invio: passa al campo successivo; nell'ultimo campo salva
+FIELDS.concat('fCat').forEach((id,i,arr)=>$(id).addEventListener('keydown',e=>{
+  if(e.key!=='Enter') return; e.preventDefault();
+  if(i < FIELDS.length-1) $(arr[i+1]).focus(); else $('saveCard').click();
+}));
+
+function editCard(id){
+  const c = cards().find(x=>x.id===id); if(!c) return;
+  editId=id; $('fBase').value=c.base||''; $('fPast').value=c.past||''; $('fPp').value=c.pp||''; $('fIt').value=c.it||''; $('fCat').value=c.cat||'';
+  $('formTitle').textContent='✏️ Modifica verbo'; $('saveCard').textContent='Salva modifiche'; $('cancelEdit').classList.remove('hidden');
+  $('formPanel').scrollIntoView({behavior:'smooth'}); $('fBase').focus();
+}
+function delCard(id){
+  const c = cards().find(x=>x.id===id); if(!c) return;
+  confirmBox('Eliminare il verbo?', `“${triple(c)} – ${c.it}” verrà eliminato.`, ()=>{
+    const arr=cards(); arr.splice(arr.indexOf(c),1); save(); if(editId===id) clearForm(); renderList();
+  });
+}
+function sayVerb(c){ say([c.base,c.past,c.pp].filter(x=>String(x||'').trim()).map(x=>variants(x)[0]).join(', '),'en'); }
+
+/* ---------------- elenco ---------------- */
+let filterCat = null;
+$('search').oninput = renderList; $('sortSel').onchange = renderList;
+function renderList(){
+  const cats = allCats();
+  if(filterCat && !cats.includes(filterCat)) filterCat=null;
+  $('catList').innerHTML = cats.filter(c=>c!=='Senza mazzo').map(c=>`<option value="${esc(c)}">`).join('');
+  $('catFilter').innerHTML = cats.length>1 || filterCat ? `<button class="chip ${!filterCat?'on':''}" data-c="">Tutti</button>` + cats.map(c=>`<button class="chip ${filterCat===c?'on':''}" data-c="${esc(c)}">${esc(c)} · ${cards().filter(x=>catOf(x)===c).length}</button>`).join('') : '';
+  $('catFilter').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ filterCat=b.dataset.c||null; renderList(); });
+
+  const q = norm($('search').value);
+  let arr = cards().filter(c=>(!filterCat||catOf(c)===filterCat) && (!q || ['base','past','pp','it'].some(k=>norm(c[k]).includes(q))));
+  const sort = $('sortSel').value;
+  const byEn=(a,b)=>a.base.localeCompare(b.base,'en'), byIt=(a,b)=>a.it.localeCompare(b.it,'it');
+  if(sort==='en') arr.sort(byEn); else if(sort==='it') arr.sort(byIt);
+  else if(sort==='new') arr.sort((a,b)=>(b.created||0)-(a.created||0));
+  else arr.sort((a,b)=>{ const ca=catOf(a), cb=catOf(b); return ca===cb ? byEn(a,b) : cats.indexOf(ca)-cats.indexOf(cb); });
+
+  $('countLbl').textContent = `(${cards().length} verbi)`;
+  if(!cards().length){
+    $('listWrap').innerHTML = `<div class="empty">Non hai ancora nessun verbo. Inserisci il primo qui sopra! ✍️<br><br><button class="btn" id="sampleInline">✨ oppure aggiungi i verbi irregolari della 3C</button></div>`;
+    $('sampleInline').onclick = addSamples; return;
+  }
+  if(!arr.length){ $('listWrap').innerHTML = '<div class="empty">Nessun verbo trovato.</div>'; return; }
+  const itemHtml = c => `<div class="item">
+      <div class="w"><div class="en">${[c.base,c.past,c.pp].map(x=>esc(String(x||'').trim()||'—')).join('<i>·</i>')}</div><div class="it">${esc(c.it)}</div>${sort!=='cat'?`<div class="cat">${esc(catOf(c))}</div>`:''}</div>
+      <div class="acts"><button class="icon" title="Ascolta" data-say="${c.id}">🔊</button><button class="icon" title="Modifica" data-ed="${c.id}">✏️</button><button class="icon" title="Elimina" data-del="${c.id}">🗑</button></div>
+    </div>`;
+  let html='';
+  if(sort==='cat'){
+    let cur=null, buf=[];
+    const flush=()=>{ if(cur!==null) html+=`<h3>${esc(cur)}</h3><div class="list">${buf.join('')}</div>`; };
+    arr.forEach(c=>{ if(catOf(c)!==cur){ flush(); cur=catOf(c); buf=[]; } buf.push(itemHtml(c)); }); flush();
+  } else html = `<div class="list">${arr.map(itemHtml).join('')}</div>`;
+  $('listWrap').innerHTML = html;
+  $('listWrap').querySelectorAll('[data-ed]').forEach(b=>b.onclick=()=>editCard(b.dataset.ed));
+  $('listWrap').querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>delCard(b.dataset.del));
+  $('listWrap').querySelectorAll('[data-say]').forEach(b=>b.onclick=()=>{ const c=cards().find(x=>x.id===b.dataset.say); if(c) sayVerb(c); });
+}
+
+/* ---------------- confronto risposte ---------------- */
+function norm(s){
+  return String(s||'').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'')
+    .replace(/[’`´]/g,"'").replace(/\([^)]*\)/g,' ').replace(/[^a-z0-9' ]+/g,' ').replace(/\s+/g,' ').trim();
+}
+const ART = { en:/^(the|a|an|to) /, it:/^(il|lo|la|i|gli|le|un|uno|una|l'|un')\s?/ };
+function core(s, lang){ let n=norm(s); for(let i=0;i<2;i++) n=n.replace(ART[lang],'').trim(); return n.replace(/'/g,''); }
+function lev(a,b){
+  const m=a.length,n=b.length; if(Math.abs(m-n)>2) return 9;
+  let p=Array.from({length:n+1},(_,i)=>i);
+  for(let i=1;i<=m;i++){ const q=[i]; for(let j=1;j<=n;j++) q[j]=Math.min(p[j]+1,q[j-1]+1,p[j-1]+(a[i-1]===b[j-1]?0:1)); p=q; }
+  return p[n];
+}
+const variants = s => String(s).split(/[\/;,]/).map(x=>x.trim()).filter(Boolean);
+// ritorna 'ok' | 'almost' | 'no'
+function judge(given, expected, lang){
+  const g = core(given, lang); if(!g) return 'no';
+  const vs = variants(expected).map(v=>core(v,lang));
+  if(vs.includes(g)) return 'ok';
+  // "was / were": va bene anche scriverle tutte e due
+  if(vs.length>1 && g.split(/\s+(?:or|and|o|e)?\s*/).filter(Boolean).every(w=>vs.includes(w))) return 'ok';
+  if(vs.some(v=>v.length>=5 && lev(g,v)===1)) return 'almost';
+  return 'no';
+}
+/* a voce molte forme irregolari suonano come altre parole (ate = eight, read = red…):
+   le parole sentite vengono tradotte anche nella forma del verbo */
+const HOMO = {eight:'ate', red:'read', reed:'read', one:'won', new:'knew', through:'threw', blue:'blew', road:'rode', rowed:'rode',
+  maid:'made', flu:'flew', flue:'flew', court:'caught', taut:'taught', fort:'fought', sort:'sought', scene:'seen', bean:'been', bin:'been',
+  groan:'grown', throne:'thrown', no:'know', right:'write', rite:'write', rows:'rose', herd:'heard', war:'wore', boar:'bore', steel:'steal',
+  brake:'break', scent:'sent', cent:'sent', here:'hear', sea:'see', bee:'be', so:'sew', sow:'sew', lead:'led', tolled:'told',
+  cot:'caught', meat:'meet', mete:'meet', where:'wear', ware:'wear', bread:'bred', wood:'would', rote:'wrote', nite:'knight'};
+const homo = s => s.toLowerCase().split(/\s+/).map(w=>HOMO[w]||w).join(' ');
+
+/* ---------------- voce (sintesi) ---------------- */
+let voices=[];
+function loadVoices(){ try{ voices = speechSynthesis.getVoices(); }catch(e){} }
+if('speechSynthesis' in window){ loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
+function say(text, lang){
+  if(!('speechSynthesis' in window)){ toast('Il browser non può leggere ad alta voce'); return; }
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang==='en' ? 'en-GB' : 'it-IT';
+    const v = voices.find(v=>v.lang.replace('_','-')===u.lang) || voices.find(v=>v.lang.startsWith(lang));
+    if(v) u.voice = v; u.rate = .85;
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let rec=null, voiceOn=false;
+
+/* ---------------- interrogazione ---------------- */
+let Q = null;            // stato dell'interrogazione in corso
+let quizSel = null;      // mazzi selezionati
+let lastSettings = null;
+const AUTO_NEXT = 1900;  // millisecondi prima del verbo successivo, dopo un verbo completato senza errori
+let autoT = null;
+function clearAuto(){ clearTimeout(autoT); autoT = null; }
+
+function renderSetup(){
+  $('setup').classList.remove('hidden'); $('play').classList.add('hidden'); $('done').classList.add('hidden');
+  const cats = allCats();
+  if(!quizSel) quizSel = new Set(cats);
+  quizSel = new Set([...quizSel].filter(c=>cats.includes(c)));
+  $('quizCats').innerHTML = cats.length ? cats.map(c=>`<button class="chip ${quizSel.has(c)?'on':''}" data-c="${esc(c)}">${esc(c)} · ${cards().filter(x=>catOf(x)===c).length}</button>`).join('') : '<span class="small">Non hai ancora nessun verbo: inseriscili nella scheda «I miei verbi».</span>';
+  $('quizCats').querySelectorAll('.chip').forEach(b=>b.onclick=()=>{ const c=b.dataset.c; quizSel.has(c)?quizSel.delete(c):quizSel.add(c); renderSetup(); });
+  const n = cards().filter(c=>quizSel.has(catOf(c))).length;
+  $('selCount').textContent = n; $('startQuiz').disabled = !n;
+}
+$('selAll').onclick = ()=>{ quizSel=new Set(allCats()); renderSetup(); };
+$('selNone').onclick = ()=>{ quizSel=new Set(); renderSetup(); };
+
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+
+function pickStart(c, setting){
+  if(setting!=='rand') return +setting;
+  const ok = [0,1,2,3].filter(i=>val(c,i));
+  return ok[Math.floor(Math.random()*ok.length)];
+}
+function makeQueue(list, settings){
+  let arr = list.slice();
+  if(settings.shuffle) shuffle(arr);
+  else arr.sort((a,b)=>catOf(a)===catOf(b)? a.base.localeCompare(b.base,'en') : catOf(a).localeCompare(catOf(b),'it',{numeric:true}));
+  return arr.map(c=>({id:c.id, start:pickStart(c, settings.start)}));
+}
+function startQuiz(list, settings){
+  lastSettings = settings; clearAuto();
+  const queue = makeQueue(list, settings);
+  Q = { queue, aside:[], round:1, total:queue.length, ok:0, wrong:0, hard:new Set(), state:'ask' };
+  $('setup').classList.add('hidden'); $('done').classList.add('hidden'); $('play').classList.remove('hidden');
+  showCard();
+}
+$('startQuiz').onclick = () => {
+  const list = cards().filter(c=>quizSel.has(catOf(c)));
+  if(!list.length) return;
+  const settings = {start: document.querySelector('input[name=start]:checked').value,
+                    level: +document.querySelector('input[name=level]:checked').value, shuffle: $('shuffle').checked};
+  try{ localStorage.setItem(PREFS_KEY, JSON.stringify(settings)); }catch(e){}
+  startQuiz(list, settings);
+};
+// ricorda le ultime scelte (livello, faccia di partenza, mescola) su questo computer
+const PREFS_KEY = 'verbi-irregolari-prefs';
+try{
+  const p = JSON.parse(localStorage.getItem(PREFS_KEY) || 'null');
+  if(p){
+    const s = document.querySelector(`input[name=start][value="${p.start}"]`); if(s) s.checked = true;
+    const l = document.querySelector(`input[name=level][value="${p.level}"]`); if(l) l.checked = true;
+    if(typeof p.shuffle==='boolean') $('shuffle').checked = p.shuffle;
+  }
+}catch(e){}
+$('stopQuiz').onclick = () => { if(Q && (Q.ok || Q.wrong)) finish(); else { resetQuiz(); renderSetup(); } };
+function resetQuiz(){ clearAuto(); Q=null; stopMic(); }
+
+function curCard(){ const it=Q.queue[0]; return it ? {item:it, card:cards().find(c=>c.id===it.id)} : null; }
+const exists = it => cards().some(c=>c.id===it.id);
+
+/* --- prisma --- */
+function setTurn(n, animate){
+  const p = $('prism');
+  if(!animate){ p.style.transition='none'; }
+  p.style.transform = `translateZ(calc(var(--half) * -1)) rotateX(${n*90}deg)`;
+  if(!animate){ void p.offsetHeight; p.style.transition=''; }
+}
+function renderPrism(){
+  const {card} = curCard();
+  // faccia j del prisma: ruotata di -90°·j, così ogni rotazione di +90° porta in primo piano la successiva
+  $('prism').innerHTML = Q.slots.map((fi,j)=>{
+    const v = val(card, fi), shown = Q.shown.has(fi);
+    return `<div class="face f-${F[fi].k}" style="transform:rotateX(${-j*90}deg) translateZ(var(--half))">
+      <div class="lbl">${F[fi].l}</div><div class="val ${shown?'':'q'}">${shown ? esc(v||'—') : '?'}</div></div>`;
+  }).join('');
+}
+function renderSlots(){
+  const {card} = curCard();
+  const now = Q.state==='ask' ? Q.steps[Q.step] : -1;
+  $('slots').innerHTML = F.map((f,fi)=>{
+    const v = val(card, fi), shown = Q.shown.has(fi) || !v;
+    return `<div class="slot f-${f.k} ${shown?'ok':''} ${fi===now?'now':''}"><div class="l">${f.l}</div><div class="v">${shown ? esc(v||'—') : '?'}</div></div>`;
+  }).join('');
+}
+
+function showCard(){
+  clearAuto();
+  while(Q.queue.length && !exists(Q.queue[0])) { Q.queue.shift(); Q.total--; }
+  let roundMsg = '';
+  if(!Q.queue.length){
+    Q.aside = Q.aside.filter(exists);
+    if(!Q.aside.length){ updateStats(); finish(); return; }
+    Q.round++;
+    Q.queue = lastSettings && lastSettings.shuffle ? shuffle(Q.aside) : Q.aside;
+    Q.aside = [];
+    const n = Q.queue.length;
+    roundMsg = `🔁 Giro ${Q.round}: ripassiamo ${n===1 ? 'il verbo sbagliato' : 'i '+n+' verbi sbagliati'}!`;
+  }
+  updateStats();
+  const {item, card} = curCard();
+  if(!val(card, item.start)) item.start = 0;    // la faccia di partenza deve avere qualcosa scritto
+  // facce nell'ordine del prisma a partire da quella di partenza (saltando quelle vuote):
+  // le prime G sono date, le altre vanno indovinate (G = 3 facile, 2 medio, 1 difficile)
+  const seq = [0,1,2,3].map(o=>(item.start+o)%4).filter(fi=>val(card,fi));
+  const G = Math.max(1, Math.min((lastSettings && lastSettings.level) || 1, seq.length-1));
+  Q.steps = seq.slice(G);
+  Q.slots = seq.slice(); [0,1,2,3].forEach(fi=>{ if(!Q.slots.includes(fi)) Q.slots.push(fi); });
+  Q.shown = new Set(seq.slice(0,G)); Q.step = 0; Q.err = false; Q.tries = 0; Q.turn = G-1; Q.state = 'ask';
+  $('stage').classList.remove('win');
+  renderPrism(); setTurn(Q.turn, false);
+  $('qCat').textContent = catOf(card);
+  ['answer','check','reveal','mic'].forEach(id=>$(id).disabled=false);
+  $('ansBox').classList.remove('hidden'); $('nextRow').classList.add('hidden');
+  setFb(roundMsg ? 'info' : '', roundMsg);
+  askStep();
+}
+function askStep(){
+  const fi = Q.steps[Q.step];
+  $('qAsk').textContent = F[fi].q;
+  $('answer').value=''; $('answer').placeholder = F[fi].ph; Q.tries = 0;
+  renderSlots(); micUI();
+  if(voiceOn) recStart();
+  setTimeout(()=>$('answer').focus(),30);
+}
+function updateStats(){
+  $('sLeft').textContent=Q.queue.length; $('sOk').textContent=Q.ok; $('sRev').textContent=Q.aside.length;
+  $('sRound').textContent=Q.round; $('sRoundBox').classList.toggle('hidden', Q.round<2);
+  $('prog').style.width = (Q.total? (Q.ok/Q.total*100):0)+'%';
+}
+function setFb(cls, html){ const f=$('fb'); f.className='fb '+cls; f.innerHTML=html; }
+
+function revealStep(){
+  const fi = Q.steps[Q.step];
+  Q.shown.add(fi); Q.step++; Q.turn++;
+  renderPrism(); setTurn(Q.turn, true);
+  if(Q.step >= Q.steps.length){ complete(); return true; }
+  return false;
+}
+
+function handleAnswer(texts, fromVoice){
+  if(!Q || Q.state!=='ask') return;
+  const {card} = curCard(); const fi = Q.steps[Q.step]; const f = F[fi]; const ex = val(card, fi);
+  let best='no', heard=texts[0]||'';
+  for(const t of texts){ const r=judge(t, ex, f.lang); if(r==='ok'){best='ok';heard=t;break;} if(r==='almost'&&best==='no'){best='almost';heard=t;} }
+  const heardHtml = fromVoice ? `<div class="small" style="margin-bottom:4px">Ho capito: «${esc(heard)}»</div>` : '';
+  if(best==='ok' || best==='almost'){
+    setFb('ok', heardHtml + (best==='ok' ? `✅ Giusto: <b>${esc(ex)}</b>` : `👍 Quasi giusto! Si scrive: <b>${esc(ex)}</b>`));
+    if(!revealStep()) askStep();
+    return;
+  }
+  // a voce il riconoscimento può capire male: i primi 2 errori a voce non contano
+  if(fromVoice && Q.tries < 2){ Q.tries++; setFb('no', heardHtml + '❌ Non è giusto. Riprova a dirlo, oppure scrivilo.'); return; }
+  Q.err = true;
+  setFb('no', heardHtml + '❌ Non è giusto. Riprova, oppure premi «Non lo so».');
+  if(!fromVoice) $('answer').select();
+}
+$('reveal').onclick = () => {
+  if(!Q || Q.state!=='ask') return;
+  const {card} = curCard(); const fi = Q.steps[Q.step];
+  Q.err = true;
+  setFb('rev', `👀 ${F[fi].l}: <b>${esc(val(card,fi))}</b>`);
+  if(!revealStep()) askStep();
+};
+function complete(){
+  const {item, card} = curCard();
+  Q.queue.shift();
+  ['answer','check','reveal'].forEach(id=>$(id).disabled=true);
+  $('qAsk').textContent = '';
+  const summary = `<span class="big">${esc(triple(card))}</span><div>${esc(card.it)}</div>`;
+  if(!Q.err){
+    Q.state='done'; Q.ok++;
+    $('stage').classList.add('win');
+    setFb('ok', `⭐ Verbo completato! +1 punto` + summary);
+    autoT = setTimeout(()=>{ if(Q && Q.state==='done') showCard(); }, AUTO_NEXT);
+  } else {
+    Q.state='wrong'; Q.wrong++; Q.hard.add(card.id); Q.aside.push(item);
+    setFb('rev', `📌 Verbo completato, ma con qualche errore: lo metto da parte e te lo richiederò più avanti.` + summary);
+    $('nextRow').classList.remove('hidden');
+    setTimeout(()=>$('next').focus(),30);
+  }
+  renderSlots(); updateStats();
+}
+$('check').onclick = () => {
+  const v=$('answer').value.trim();
+  if(!v){ toast('Scrivi la risposta, pronunciala, o premi «Non lo so»'); $('answer').focus(); return; }
+  handleAnswer([v], false);
+};
+$('answer').onkeydown = e => { if(e.key==='Enter'){ e.preventDefault(); e.stopPropagation(); $('check').click(); } };
+$('next').onclick = () => { if(Q && Q.state!=='ask') showCard(); };
+document.addEventListener('keydown', e => {
+  if(e.key==='Enter' && Q && Q.state!=='ask' && !$('play').classList.contains('hidden') && document.activeElement!==$('next')){ e.preventDefault(); showCard(); }
+});
+$('qListen').onclick = () => { const cc=curCard(); if(cc) sayVerb(cc.card); };
+
+/* ---------------- microfono ----------------
+   Una volta acceso, il microfono resta acceso per tutta l'interrogazione
+   (un'unica sessione di riconoscimento continuo), così il browser non chiede
+   il permesso a ogni parola. Si riavvia solo quando cambia la lingua
+   (dall'inglese all'italiano e viceversa). */
+function micUI(){
+  $('mic').classList.toggle('listening', voiceOn);
+  $('mic').textContent = voiceOn ? '⏹ Spegni microfono' : '🎤 Pronuncia';
+  $('micHint').textContent = !SR ? '🎤 Per rispondere a voce usa Google Chrome o Microsoft Edge.'
+    : voiceOn ? '🎤 Il microfono è acceso: di\' le risposte ad alta voce, una alla volta.' : '';
+}
+function wantedLang(){
+  if(!Q || Q.state!=='ask' || !Q.queue.length) return null;
+  return F[Q.steps[Q.step]].lang==='en' ? 'en-GB' : 'it-IT';
+}
+function recStart(){
+  if(!voiceOn || !SR) return;
+  const lang = wantedLang(); if(!lang) return;
+  if(rec){
+    if(rec.lang===lang) return;
+    const old = rec; rec = null;
+    old.onresult = null; old.onerror = null; old.onend = () => recStart();
+    try{ old.abort(); }catch(e){ recStart(); }
+    return;
+  }
+  const r = new SR(); rec = r;
+  r.lang = lang; r.continuous = true; r.interimResults = false; r.maxAlternatives = 5;
+  r.onresult = ev => {
+    for(let i=ev.resultIndex; i<ev.results.length; i++){
+      const res = ev.results[i]; if(!res.isFinal) continue;
+      if(!Q || Q.state!=='ask') continue;
+      let alts=[]; for(let k=0;k<res.length;k++) alts.push(res[k].transcript.trim());
+      if(r.lang==='en-GB'){
+        alts.push(...alts.map(a=>a.replace(/^(the|a|an|to)\s+/i,'')));
+        alts.push(...alts.map(homo));
+      }
+      handleAnswer(alts.filter(Boolean), true);
+    }
+  };
+  r.onerror = ev => {
+    if(ev.error==='no-speech' || ev.error==='aborted') return;
+    const m = {'not-allowed':'🎤 Il microfono non è autorizzato: consenti l\'accesso nelle impostazioni del browser.',
+               'service-not-allowed':'🎤 Il microfono non è autorizzato in questa pagina.',
+               'audio-capture':'🎤 Nessun microfono trovato.',
+               'network':'🎤 Per il riconoscimento vocale serve la connessione a Internet.'}[ev.error];
+    voiceOn = false; micUI();
+    if(m) setFb('info', m);
+  };
+  r.onend = () => {
+    if(rec!==r) return;
+    rec = null;
+    if(voiceOn && Q && !$('play').classList.contains('hidden')) setTimeout(recStart, 300);
+  };
+  try{ r.start(); }
+  catch(e){ rec = null; voiceOn = false; micUI(); toast('Non riesco ad avviare il microfono'); }
+}
+function stopMic(){
+  voiceOn = false;
+  if(rec){ const old = rec; rec = null; old.onend = null; old.onresult = null; try{ old.abort(); }catch(e){} }
+  micUI();
+}
+$('mic').onclick = () => {
+  if(!SR){ toast('Il riconoscimento vocale funziona con Google Chrome o Microsoft Edge'); return; }
+  if(voiceOn){ stopMic(); return; }
+  voiceOn = true; micUI(); recStart();
+};
+
+function finish(){
+  stopMic(); clearAuto();
+  $('play').classList.add('hidden'); $('done').classList.remove('hidden');
+  const pending = new Set([...Q.queue, ...Q.aside].map(i=>i.id).filter(id=>cards().some(c=>c.id===id)));
+  const hard = [...Q.hard].map(id=>cards().find(c=>c.id===id)).filter(Boolean);
+  const complete = !pending.size;
+  $('doneTitle').textContent = complete ? 'Interrogazione completata!' : 'Interrogazione interrotta';
+  $('doneIcon').textContent = complete ? '🏆' : '✋';
+  $('doneTxt').innerHTML = complete
+    ? (Q.wrong ? `Hai completato tutti i <b>${Q.total}</b> verbi in <b>${Q.round}</b> giri. Verbi sbagliati lungo la strada: <b>${Q.wrong}</b>.`
+               : `Hai completato tutti i <b>${Q.total}</b> verbi senza errori: bravissimo/a! 🌟`)
+    : `Hai fatto <b>${Q.ok}</b> punti su <b>${Q.total}</b> verbi.`;
+  $('doneHard').innerHTML = hard.length ? `<div class="small">Verbi che hai sbagliato almeno una volta${complete?'':' (in grassetto quelli ancora da indovinare)'}:</div><div class="hardlist">${hard.map(c=>{
+      const b = pending.has(c.id) && !complete;
+      return `<span${b?' style="outline:2px solid #f0d78a"':''}>${b?'<b>':''}${esc(triple(c))} (${esc(c.it)})${b?'</b>':''}</span>`; }).join('')}</div>` : '';
+  $('retryHard').classList.toggle('hidden', !hard.length);
+  $('retryHard').onclick = () => startQuiz(hard, lastSettings);
+}
+$('again').onclick = () => { resetQuiz(); renderSetup(); };
+
+/* ---------------- backup ---------------- */
+$('exportBtn').onclick = () => {
+  if(!cards().length){ toast('Non hai ancora nessun verbo'); return; }
+  const data = {app:'verbi-irregolari', version:1, student:DB.current, exported:new Date().toISOString(), cards:cards()};
+  const blob = new Blob([JSON.stringify(data, null, 1)], {type:'application/json'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+  a.download = 'verbi-' + (DB.current||'mazzo').replace(/[^\w\-]+/g,'_') + '-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
+  toast('Verbi scaricati ✔');
+};
+$('importFile').onchange = e => {
+  const f=e.target.files[0]; e.target.value=''; if(!f) return;
+  const r=new FileReader();
+  r.onload = () => {
+    try{
+      const d = JSON.parse(r.result); const list = Array.isArray(d) ? d : d.cards;
+      if(!Array.isArray(list)) throw 0;
+      let added=0;
+      list.forEach(c=>{
+        if(!c || !c.base || !c.it) return;
+        const base=String(c.base).trim(), it=String(c.it).trim();
+        if(cards().some(x=>x.base.toLowerCase()===base.toLowerCase() && x.it.toLowerCase()===it.toLowerCase())) return;
+        cards().push({id:uid(), base, past:String(c.past||'').trim(), pp:String(c.pp||'').trim(), it, cat:String(c.cat||''), created:Date.now()});
+        added++;
+      });
+      if(save()){ toast(added ? `Aggiunti ${added} verbi ✔` : 'Nessun verbo nuovo da aggiungere'); quizSel=null; renderList(); }
+    }catch(err){ toast('Questo file non contiene verbi validi'); }
+  };
+  r.readAsText(f);
+};
+
+/* ---------------- esempi ---------------- */
+/* Elenco «3C 2025 – Verbi irregolari da studiare», diviso nei mazzi della prima colonna.
+   Il numero davanti al nome serve a tenere i mazzi nello stesso ordine della tabella.
+   Le parole tra parentesi sono solo un aiuto: non vanno scritte nella risposta. */
+const VERBI_3C = [
+  ['1 · The triplets', [
+    ['cost','cost','cost','costare'],['cut','cut','cut','tagliare'],['hit','hit','hit','colpire'],
+    ['let','let','let','lasciare (permettere)'],['put','put','put','mettere']]],
+  ['2 · The twins and the black sheep', [
+    ['become','became','become','diventare'],['come','came','come','venire'],['run','ran','run','correre']]],
+  ['3 · i-a-u', [
+    ['begin','began','begun','iniziare'],['drink','drank','drunk','bere'],['sing','sang','sung','cantare'],['swim','swam','swum','nuotare']]],
+  ['4 · Change that vowel!', [
+    ['find','found','found','trovare'],['get','got','got / gotten','ottenere'],['forget','forgot','forgotten','dimenticare'],
+    ['sell','sold','sold','vendere'],['sit down','sat down','sat down','sedersi'],['stand up','stood up','stood up','alzarsi'],
+    ['understand','understood','understood','capire'],['tell','told','told','raccontare'],['win','won','won','vincere']]],
+  ['5 · Shorten that vowel!', [
+    ['feel','felt','felt','sentire (interiormente)'],['hear','heard','heard','sentire (con le orecchie)'],['leave','left','left','lasciare (un luogo)'],
+    ['lose','lost','lost','perdere'],['meet','met','met','incontrare'],['read','read (pron. red)','read (pron. red)','leggere'],
+    ['say','said','said','dire'],['sleep','slept','slept','dormire']]],
+  ['6 · Is that German?', [
+    ['break','broke','broken','rompere'],['choose','chose','chosen','scegliere'],['drive','drove','driven','guidare'],
+    ['eat','ate','eaten','mangiare'],['fall','fell','fallen','cadere'],['give','gave','given','dare'],['forgive','forgave','forgiven','perdonare'],
+    ['ride','rode','ridden','cavalcare'],['see','saw','seen','vedere'],['speak','spoke','spoken','parlare'],['take','took','taken','prendere'],
+    ['wake up','woke up','woken up','svegliarsi'],['write','wrote','written','scrivere']]],
+  ['7 · /u/ /oʊn/', [
+    ['fly','flew','flown','volare'],['grow','grew','grown','crescere'],['know','knew','known','conoscere'],['throw','threw','thrown','lanciare']]],
+  ['8 · D > T', [
+    ['build','built','built','costruire'],['send','sent','sent','mandare'],['spend','spent','spent','spendere']]],
+  ['9 · /ɔːt/', [
+    ['bring','brought','brought','portare'],['buy','bought','bought','comprare'],['catch','caught','caught','prendere (al volo)'],['think','thought','thought','pensare']]],
+  ['10 · Auxiliaries', [
+    ['be','was / were','been','essere'],['do','did','done','fare'],['have','had','had','avere']]],
+  ['11 · Others', [
+    ['go','went','gone','andare'],['make','made','made','fare (costruire)'],['pay','paid','paid','pagare']]]
+];
+function addSamples(silent){
+  let added=0, i=0;
+  VERBI_3C.forEach(([cat, verbs])=>verbs.forEach(([base,past,pp,it])=>{
+    i++;
+    if(cards().some(c=>c.base.toLowerCase()===base && c.it.toLowerCase()===it)) return;
+    cards().push({id:uid(),base,past,pp,it,cat,created:Date.now()+i}); added++;
+  }));
+  if(silent===true){ save(); return; }
+  if(save()){ toast(added?`Aggiunti ${added} verbi della 3C ✔`:'I verbi della 3C ci sono già'); quizSel=null; renderList(); }
+}
+$('sampleBtn').onclick = addSamples;
+
+/* ---------------- avvio ---------------- */
+function refreshAll(){ renderStudents(); clearForm(); $('fCat').value=''; filterCat=null; quizSel=null; renderList(); if(!$('tab-quiz').classList.contains('hidden')) renderSetup(); }
+refreshAll();
+if(!DB.current || !DB.students[DB.current]){
+  const names=Object.keys(DB.students);
+  if(names.length){ DB.current=names[0]; save(); refreshAll(); }
+  else askName('👋 Ciao! Come ti chiami?', HELLO_SUB, '', false, addStudent);
+}
+if(!storageOk) toast('⚠️ Questo browser non permette di salvare: ricordati di scaricare i verbi.');
+})();
+</script>
+</body>
+</html>
